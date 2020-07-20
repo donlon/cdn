@@ -8,7 +8,7 @@
 	}
 
 	function showMonthlyPV(data) {
-		let pvBtn = $('<span>').attr('class', 'mw-custom-monthly-pv').text('PV/mo: ' + getViewCount(data).toLocaleString())
+		let pvBtn = $('<span>').attr('class', 'mw-custom-monthly-pv').text('PV: ' + getViewCount(data).toLocaleString() + '/mo')
 
 		pvBtn.css('font-size', 'small')
 		    .css('font-weight', 'normal')
