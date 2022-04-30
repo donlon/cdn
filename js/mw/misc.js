@@ -1,3 +1,6 @@
+/**
+ * Display page view of an article
+ **/
 !(function ($, mw) {
 	function getViewCount(data) {
 		let sum = 0;
@@ -40,4 +43,18 @@
 	        }
 		})
 	}
+}) (jQuery, mediaWiki)
+
+/**
+ * Disable translator abuse check
+ **/
+!(function ($, mw) {
+	let oldCheckFunction = mw.cx.TranslationController.prototype.getMTAbuseMsg
+
+	mw.cx.TranslationController.prototype.getMTAbuseMsg = function() {
+		let mtAbuseMsg = oldCheckFunction.apply(this, arguments)
+		console.log(mtAbuseMsg)
+		return null
+	}
+
 }) (jQuery, mediaWiki)
