@@ -49,12 +49,23 @@
  * Disable translator abuse check
  **/
 !(function ($, mw) {
-    let oldCheckFunction = mw.cx.TranslationController.prototype.getMTAbuseMsg
-
-    mw.cx.TranslationController.prototype.getMTAbuseMsg = function() {
-        let mtAbuseMsg = oldCheckFunction.apply(this, arguments)
-        console.log(mtAbuseMsg)
-        return null
-    }
-
+    if (mw.config.get('wgPageName') == 'Special:内容翻译' && !RLPAGEMODULES.includes('ext.cx.dashboard')) {
+    console.log('Page of 内容翻译...')
+    $(function () {
+        function checkCxState() {
+            if (mw.loader.getState('mw.cx.init')) {
+                console.log('cx ready');
+                let oldCheckFunction = mw.cx.TranslationController.prototype.getMTAbuseMsg
+                mw.cx.TranslationController.prototype.getMTAbuseMsg = function() {
+                    let mtAbuseMsg = oldCheckFunction.apply(this, arguments)
+                    console.log(mtAbuseMsg)
+                    return null
+                }
+            } else {
+                setTimeout(checkCxState, 1000);
+            }
+        }
+        checkCxState();
+    });
+}
 }) (jQuery, mediaWiki)
